@@ -1,4 +1,7 @@
-# PS4HEN
+<div align="center">
+  <img src="goldhen.png" alt="GoldHEN" width="200">
+  <h1>PS4HEN</h1>
+</div>
 
 Kernel exploit for the PlayStation 4 on firmware **13.52** and **14.00**,
 run from the console's own browser. Loads **GoldHEN** into the kernel,
