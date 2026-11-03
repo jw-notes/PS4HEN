@@ -1,0 +1,45 @@
+<!doctype html>
+<html class="landing" lang="en" manifest="cache.appcache">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>PS4HEN</title>
+    <link rel="icon" type="image/png" href="goldhen.png" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Every run starts from here. The referrer guard in jb.js arms the chain
+         only when it was reached from this page, so that a browser restoring
+         its last session cannot re-run it unattended. -->
+    <div id="brand"><img class="brand-logo" src="goldhen.png" alt="GoldHEN" /></div>
+
+    <div class="shell">
+
+      <main class="panel">
+        <img class="panel-logo" src="goldhen.png" alt="" />
+        <p class="lede">PS4 kernel exploit &middot; firmware 13.52 and 14.00</p>
+
+        <form class="pick" id="pick">
+          <div class="opt opt-active">
+            <input type="radio" name="payload" value="goldhen" checked hidden />
+            <span class="opt-icon">⬡</span>
+            <span class="opt-label">GoldHEN</span>
+            <span class="opt-badge">selected</span>
+          </div>
+
+          <label class="opt opt-auto">
+            <input type="checkbox" id="auto" checked />
+            <span>autostart</span>
+          </label>
+
+          <button class="btn" type="submit">start</button>
+          <p class="count" id="count"></p>
+          <p class="count" id="cache" aria-live="polite"></p>
+        </form>
+      </main>
+    </div>
+
+    <p class="byline">by well0nez/m0zz &middot; edited by jw-notes</p>
+    <script src="launch.js"></script>
+  </body>
+</html>

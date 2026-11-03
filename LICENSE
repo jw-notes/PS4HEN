@@ -1,0 +1,45 @@
+PS4HEN — Custom Notice
+======================
+
+Original Work
+-------------
+This project is based on "afterglow" by well0nez and m0zz.
+All original exploit code, kernel patch logic, and core runtime files
+(afterglow.js, jb.js, jb.html, core.js, mem.js, int64.js, ps4_offsets.js,
+launch.js, style.css, cache.appcache) are the work of well0nez/m0zz and are
+reproduced here under the terms of the GNU Affero General Public License v3
+(AGPL-3.0), as originally published. A copy of that license is available at:
+
+    https://www.gnu.org/licenses/agpl-3.0.txt
+
+Third-Party Components
+----------------------
+The following bundled files are not covered by this notice and retain their
+own respective licenses:
+
+  goldhen.bin          — GoldHEN, included with permission of SiSTRo
+  patchset-1400.bin    — kernel patch set for firmware 14.00
+  patchset-1352.bin    — kernel patch set for firmware 13.52
+
+Modifications
+-------------
+The following changes were made by jw-notes (2026):
+
+  - Removed the ps4-hen payload option; GoldHEN is now the only payload
+  - Renamed the UI from "afterglow" to "PS4HEN"
+  - Replaced the meme image with the GoldHEN logo (goldhen.png)
+  - Moved the logo above the launch form and into the top bar
+  - Updated the byline to credit original authors and note modifications
+  - Added a PS4 browser user-agent check that blocks the start button
+    on non-PS4 browsers with a clear error message
+  - Refreshed the visual design: dark gold theme for the GoldHEN card,
+    improved button styling, updated color tokens in style.css
+  - Added favicon (goldhen.png) to both index.html and jb.html
+  - Replaced the AGPL-3.0 LICENSE file with this custom notice
+
+Disclaimer
+----------
+This software is provided for educational and research purposes only.
+It is provided "as is", without warranty of any kind. The original authors
+and the modifier accept no liability for any use or misuse of this software.
+Use it only on hardware you own and in accordance with applicable law.
