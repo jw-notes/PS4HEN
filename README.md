@@ -1,9 +1,6 @@
-<div align="center">
-  <img src="goldhen.png" alt="GoldHEN" width="200">
-  <h1>PS4HEN</h1>
-</div>
+# PS4HEN
 
-Kernel exploit for the PlayStation 4 on firmware **13.52** and **14.00**,
+Kernel exploit for the PlayStation 4 on firmware **13.52**, **14.00** and **14.02**,
 run from the console's own browser. Loads **GoldHEN** into the kernel,
 leaving it readable and writable, `uid 0`, `mmap` handing out RWX and
 `syscall 11` as a kexec gate — so the usual payloads work as they do after
@@ -14,10 +11,12 @@ any other kernel exploit.
 
 ## Requirements
 
-* PS4 on firmware **13.52** or **14.00**, on your network
+* PS4 on firmware **13.52**, **14.00** or **14.02**, on your network
 * A machine on the same network with `python3`
 
 Nothing is installed on the console. The pages are static files.
+
+14.02 follows the tables and raw GoldHEN loading path in WebKitty. This port has been checked locally against that source, but has not yet been tested on a 14.02 console.
 
 ## Running it
 
@@ -36,8 +35,8 @@ cannot re-trigger it unattended.
 
 | File | What it is |
 |---|---|
-| `goldhen.bin` | GoldHEN, included with the author's permission |
-| `patchset-1400.bin`, `patchset-1352.bin` | the kernel patches GoldHEN expects to find, one set per firmware |
+| `goldhen.bin` | shared GoldHEN v2.4b18.14 from WebKitty for 13.52, 14.00 and 14.02 |
+| `patchset-1400.bin`, `patchset-1352.bin` | separate kernel patch sets for 14.00 and 13.52; 14.02 uses its bootstrap and starts raw GoldHEN directly |
 | `afterglow.js` | original exploit work by well0nez/m0zz |
 | `jb.js`, `ps4_offsets.js` | the raw13g host, trimmed |
 | `core.js`, `mem.js`, `int64.js` | the in-process primitive |
@@ -77,7 +76,7 @@ exit, so no browser restart will help. Cold start only.
 * **Pharaoh2k**
 * **TheFlow, ChendoChap, abc, AlAzif, LightningMods, @egycnq** — the PS4 kernel
   patch and sandbox escape lineage these payloads build on
-* **jw-notes** — UI modifications, GoldHEN-only mode, PS4HEN branding
+* **jw-notes** — UI modifications
 
 ## Legal
 

@@ -618,6 +618,25 @@ PS4["14.00"] = Object.assign({}, PS4["13.52"], {
 
   k_idt_rsvd: undefined,
   k_sysctl_handle_int: undefined,
+});
+
+PS4["14.02"] = Object.assign({}, PS4["13.52"], {
+  alias_of: "13.52-webkit",
+
+  // Reported on screen on every run, so it names what actually runs: the
+  // kernel stage comes from afterglow, and the payload is picked by ?mode.
+  fw_status:
+    "state=14.02 " +
+    "webkit=13.52-identical " +
+    "kernel=afterglow (apm-UAF, own kernel stage) " +
+    "payload=hen.bin|goldhen.bin",
+
+  k_stubs: undefined,
+  wk___imp_pthread_create: undefined,
+  k_pthread_create: undefined,
+
+  k_idt_rsvd: undefined,
+  k_sysctl_handle_int: undefined,
   k_jmp_rsi: undefined,
   k_kl_lock: undefined,
   k_evf_cv: undefined,
